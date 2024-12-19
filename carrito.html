@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego del Carrito</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+    .pista {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px;
+    }
+    .casilla {
+      width: 40px;
+      height: 40px;
+      border: 1px solid #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 2px;
+      background-color: #fff;
+    }
+    .carrito {
+      font-size: 24px;
+    }
+    .mensaje {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Juego del Carrito 🚗</h1>
+  <p>Usa las teclas <strong>D</strong> para avanzar y <strong>R</strong> para reiniciar.</p>
+  <div id="pista" class="pista"></div>
+  <div id="mensaje" class="mensaje"></div>
+
+  <script>
+    // Configuración inicial
+    const longitudPista = 10;
+    let posicionCarrito = 0;
+
+    // Referencias al DOM
+    const pista = document.getElementById('pista');
+    const mensaje = document.getElementById('mensaje');
+
+    // Función para renderizar la pista
+    function renderizarPista() {
+      pista.innerHTML = ''; // Limpia la pista
+      for (let i = 0; i < longitudPista; i++) {
+        const casilla = document.createElement('div');
+        casilla.classList.add('casilla');
+        if (i === posicionCarrito) {
+          const carrito = document.createElement('span');
+          carrito.classList.add('carrito');
+          carrito.textContent = '🚗';
+          casilla.appendChild(carrito);
+        }
+        pista.appendChild(casilla);
+      }
+    }
+
+    // Función para mostrar mensajes
+    function mostrarMensaje(texto) {
+      mensaje.textContent = texto;
+    }
+
+    // Control del teclado
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'd' || e.key === 'D') {
+        if (posicionCarrito < longitudPista - 1) {
+          posicionCarrito++;
+          renderizarPista();
+          if (posicionCarrito === longitudPista - 1) {
+            mostrarMensaje('¡Felicidades, llegaste al final! 🎉');
+          }
+        }
+      } else if (e.key === 'r' || e.key === 'R') {
+        posicionCarrito = 0;
+        renderizarPista();
+        mostrarMensaje('');
+      }
+    });
+
+    // Inicialización
+    renderizarPista();
+  </script>
+</body>
+</html>
